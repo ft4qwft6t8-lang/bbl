@@ -1,0 +1,241 @@
+<!DOCTYPE html>
+<html lang="en" class="dark">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1.0"/>
+  <title>ballard bread lab · gift items</title>
+  <link rel="stylesheet" href="styles.css" />
+  <script defer src="script.js"></script>
+</head>
+<body class="bg-body text-body">
+
+<header class="header">
+  <div class="wrap header-inner">
+    <div class="brand-block">
+      <div class="brand-row">
+        <div class="brand-name">ballard bread lab</div>
+        <div class="pill pill-green">add-ons / gifts</div>
+      </div>
+      <div class="brand-sub">late night pickup · preorder only</div>
+    </div>
+
+    <div class="pickup-loc">
+      <div class="pickup-line">pickup: side door · unit 105</div>
+      <div class="pickup-line">5512 17th Ave NW, Seattle, WA 98107</div>
+      <div class="pickup-note">prepaid pickup</div>
+    </div>
+  </div>
+</header>
+
+<main class="wrap main-grid">
+  <section class="main-col">
+
+    <section class="block">
+      <div class="section-head">
+        <h2 class="section-title">gifts / extras</h2>
+        <p class="section-desc">
+          add-ons ride along with your bread pickup window.
+        </p>
+      </div>
+
+      <div class="card-grid gift-card-grid">
+
+        <!-- Flashlight -->
+        <article class="card">
+          <div class="photo-placeholder">
+            <div>[photo: small flashlight]</div>
+            <div class="photo-hint">placeholder (silver)</div>
+          </div>
+
+          <div class="card-head-row">
+            <div class="card-title">Mini Flashlight (silver)</div>
+            <div class="card-price">$6</div>
+          </div>
+
+          <div class="card-text">
+            pocket light, metal housing, takes AAA. easy alley navigation.
+          </div>
+
+          <button class="btn-primary full"
+            onclick="addToCart('Mini Flashlight (silver)', 6)">
+            Add to Cart
+          </button>
+        </article>
+
+        <!-- Socks -->
+        <article class="card">
+          <div class="photo-placeholder">
+            <div>[photo: socks]</div>
+            <div class="photo-hint">placeholder (eggplant)</div>
+          </div>
+
+          <div class="card-head-row">
+            <div class="card-title">Cotton Socks (eggplant)</div>
+            <div class="card-price">$9</div>
+          </div>
+
+          <div class="card-text">
+            soft cotton crew socks in eggplant colorway.
+          </div>
+
+          <button class="btn-primary full"
+            onclick="addToCart('Cotton Socks (eggplant)', 9)">
+            Add to Cart
+          </button>
+        </article>
+
+      </div>
+
+      <div class="back-link-row">
+        <a class="btn-secondary full" href="index.html">
+          ← back to bread / checkout
+        </a>
+      </div>
+    </section>
+
+    <!-- contact still available here -->
+    <section id="contact" class="block">
+      <form
+        action="https://formspree.io/f/xanlylkl"
+        method="POST"
+        class="contact-card"
+      >
+        <h2 class="section-title no-gap">questions?</h2>
+        <p class="section-desc tight">
+          ask about pickup windows, gifts, sizing, etc.
+        </p>
+
+        <label class="form-field">
+          <span class="form-label">Your email</span>
+          <input class="input"
+            type="email"
+            name="email"
+            required
+            placeholder="you@example.com" />
+        </label>
+
+        <label class="form-field">
+          <span class="form-label">Message</span>
+          <textarea class="input textarea"
+            name="message"
+            rows="4"
+            required
+            placeholder="type your message here"></textarea>
+        </label>
+
+        <button class="btn-primary full" type="submit">Send</button>
+
+        <div class="form-foot">
+          handled securely by Formspree.
+        </div>
+      </form>
+    </section>
+  </section>
+
+  <!-- CART SIDEBAR -->
+  <aside class="cart-col">
+    <div class="cart-card">
+      <div class="cart-top">
+        <div class="cart-head">Your Order</div>
+        <div class="cart-total">
+          $<span id="cartTotal">0.00</span>
+        </div>
+      </div>
+
+      <div id="cartItems" class="cart-items empty-msg">
+        Cart is empty.
+      </div>
+
+      <button class="btn-checkout" onclick="openPayModal()">
+        Pay &amp; schedule pickup →
+      </button>
+
+      <p class="checkout-note">
+        pickup is at unit 105, prepaid only.
+      </p>
+
+      <div class="toast-blurb">
+        you can still add bread on the main page.
+      </div>
+
+      <div class="back-link-row">
+        <a class="btn-secondary full" href="index.html">
+          ← go to breads
+        </a>
+      </div>
+    </div>
+  </aside>
+</main>
+
+<footer class="footer">
+  <div class="wrap footer-inner">
+    <div class="foot-left">
+      <div class="foot-brand">ballard bread lab</div>
+      <div>side door pickup · unit 105</div>
+      <div>5512 17th Ave NW, Seattle, WA 98107</div>
+    </div>
+    <div class="foot-right">
+      <div>card checkout via Stripe</div>
+      <div>contact form active</div>
+    </div>
+  </div>
+</footer>
+
+<!-- PAYMENT MODAL -->
+<div id="payModal" class="reserve-modal hidden">
+  <div class="reserve-card">
+    <h2 class="reserve-title">checkout &amp; pickup</h2>
+    <p class="reserve-sub">
+      we’ll bake / pack for your pickup slot.
+    </p>
+
+    <div class="reserve-summary-block">
+      <div class="reserve-summary-line">
+        <span class="reserve-summary-label">Pickup window</span>
+        <span class="reserve-summary-value" id="summaryWindow"></span>
+      </div>
+
+      <div class="reserve-summary-line">
+        <span class="reserve-summary-label">Items</span>
+        <span class="reserve-summary-value" id="summaryItems"></span>
+      </div>
+
+      <div class="reserve-summary-line">
+        <span class="reserve-summary-label">Total</span>
+        <span class="reserve-summary-value" id="summaryTotal"></span>
+      </div>
+    </div>
+
+    <div class="reserve-field">
+      <label class="reserve-label" for="buyerName">Your name</label>
+      <input class="reserve-input" id="buyerName" type="text" required />
+    </div>
+
+    <div class="reserve-field">
+      <label class="reserve-label" for="buyerPhone">Phone</label>
+      <input class="reserve-input" id="buyerPhone" type="tel" required />
+    </div>
+
+    <div class="reserve-field">
+      <label class="reserve-label" for="buyerEmail">Email</label>
+      <input class="reserve-input" id="buyerEmail" type="email" required />
+    </div>
+
+    <div class="reserve-pay-choices">
+      <div class="reserve-pay-label">Choose payment:</div>
+
+      <button class="btn-primary full" onclick="checkoutStripe()">
+        Pay with card (Stripe)
+      </button>
+    </div>
+
+    <div class="reserve-foot">
+      after payment you’ll get a receipt, and we’ll start dough / packing.
+    </div>
+
+    <button class="reserve-cancel" onclick="closePayModal()">Cancel</button>
+  </div>
+</div>
+
+</body>
+</html>

@@ -1,0 +1,373 @@
+<!DOCTYPE html>
+<html lang="en" class="dark">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1.0"/>
+  <title>ballard bread lab · late night pickup</title>
+  <link rel="stylesheet" href="styles.css" />
+  <script defer src="script.js"></script>
+</head>
+<body class="bg-body text-body">
+
+<header class="header">
+  <div class="wrap header-inner">
+    <div class="brand-block">
+      <div class="brand-row">
+        <div class="brand-name">ballard bread lab</div>
+        <div class="pill pill-green">late night pickup</div>
+      </div>
+      <div class="brand-sub">whole wheat • olive oil • egg • baked to order</div>
+    </div>
+
+    <div class="pickup-loc">
+      <div class="pickup-line">pickup: side door · unit 105</div>
+      <div class="pickup-line">5512 17th Ave NW, Seattle, WA 98107</div>
+      <div class="pickup-note">prepaid pickup · baked per order</div>
+    </div>
+  </div>
+</header>
+
+<main class="wrap main-grid">
+  <!-- MAIN CONTENT -->
+  <section class="main-col">
+
+    <!-- BREADS -->
+    <section id="breads" class="block">
+      <div class="section-head">
+        <h2 class="section-title">tonight’s loaves baked per order</h2>
+        <p class="section-desc">
+          baked fresh and ready in your pickup window. choose pickup slot → pay → we bake.
+        </p>
+      </div>
+
+      <div class="card-grid">
+
+        <!-- Midnight Herb Loaf -->
+        <article class="card">
+          <div class="photo-placeholder">
+            <div>[photo: herb loaf]</div>
+            <div class="photo-hint">placeholder</div>
+          </div>
+
+          <div class="card-head-row">
+            <div class="card-title">Midnight Herb Loaf</div>
+            <div class="card-price">$8</div>
+          </div>
+
+          <div class="card-text">
+            Whole wheat + olive oil + egg. Garlic, onion, Italian herb blend.
+          </div>
+
+          <div class="card-organic">All organic ingredients.</div>
+
+          <div class="card-ingredients">
+            <div class="ingredients-label">Ingredients</div>
+            <div class="ingredients-list">
+              Whole-wheat flour, bread flour, warm water, olive oil, egg,
+              cane sugar, sea salt, onion powder, garlic powder,
+              Italian herbs (oregano, basil, thyme, rosemary), yeast.
+            </div>
+            <div class="allergen">Contains: Wheat, Egg.</div>
+          </div>
+
+          <button class="btn-primary full"
+            onclick="addToCart('Midnight Herb Loaf', 8)">
+            Add to Cart
+          </button>
+        </article>
+
+        <!-- Night Chocolate Loaf -->
+        <article class="card">
+          <div class="photo-placeholder">
+            <div>[photo: chocolate loaf]</div>
+            <div class="photo-hint">placeholder</div>
+          </div>
+
+          <div class="card-head-row">
+            <div class="card-title">Night Chocolate Loaf</div>
+            <div class="card-price">$9</div>
+          </div>
+
+          <div class="card-text">
+            Olive oil, egg, cocoa, vanilla, cinnamon. Soft, slightly sweet.
+          </div>
+
+          <div class="card-organic">All organic ingredients.</div>
+
+          <div class="card-ingredients">
+            <div class="ingredients-label">Ingredients</div>
+            <div class="ingredients-list">
+              Whole-wheat flour, bread flour, warm water, olive oil, egg,
+              cane sugar, cocoa powder, cinnamon, vanilla extract,
+              sea salt, yeast.
+            </div>
+            <div class="allergen">Contains: Wheat, Egg.</div>
+          </div>
+
+          <button class="btn-primary full"
+            onclick="addToCart('Night Chocolate Loaf', 9)">
+            Add to Cart
+          </button>
+        </article>
+
+        <!-- Ballard Biscocho -->
+        <article class="card">
+          <div class="photo-placeholder">
+            <div>[photo: biscocho]</div>
+            <div class="photo-hint">placeholder</div>
+          </div>
+
+          <div class="card-head-row">
+            <div class="card-title">Ballard Biscocho</div>
+            <div class="card-price">$10</div>
+          </div>
+
+          <div class="card-text">
+            crisp sweet bread bites, caramelized edges.
+          </div>
+
+          <div class="card-organic">All organic ingredients.</div>
+
+          <div class="card-ingredients">
+            <div class="ingredients-label">Ingredients</div>
+            <div class="ingredients-list">
+              Whole-wheat flour, bread flour, warm water, olive oil, egg,
+              cane sugar, cinnamon, vanilla extract, sea salt, yeast.
+            </div>
+            <div class="allergen">Contains: Wheat, Egg.</div>
+          </div>
+
+          <button class="btn-primary full"
+            onclick="addToCart('Ballard Biscocho', 10)">
+            Add to Cart
+          </button>
+        </article>
+
+      </div>
+    </section>
+
+    <!-- PICKUP WINDOWS -->
+    <section id="pickup" class="block">
+      <h2 class="section-title">choose pickup window</h2>
+      <p class="section-desc">
+        each loaf is started for your slot.
+      </p>
+
+      <div class="window-grid">
+        <label class="window-card">
+          <input
+            type="radio"
+            name="pickupWindow"
+            class="hidden-radio"
+            value="afternoon"
+            checked
+            onchange="setPickupWindow('afternoon')"
+          />
+          <div class="window-name">Afternoon Batch</div>
+          <div class="window-time">3 PM – 4 PM</div>
+          <div class="window-hint">orders in before 12 PM</div>
+        </label>
+
+        <label class="window-card">
+          <input
+            type="radio"
+            name="pickupWindow"
+            class="hidden-radio"
+            value="evening"
+            onchange="setPickupWindow('evening')"
+          />
+          <div class="window-name">Evening Batch</div>
+          <div class="window-time">6 PM – 7 PM</div>
+          <div class="window-hint">orders in before 3 PM</div>
+        </label>
+
+        <label class="window-card">
+          <input
+            type="radio"
+            name="pickupWindow"
+            class="hidden-radio"
+            value="night"
+            onchange="setPickupWindow('night')"
+          />
+          <div class="window-name">Night Batch</div>
+          <div class="window-time">9 PM – 10 PM</div>
+          <div class="window-hint">orders in before 6 PM</div>
+        </label>
+
+        <label class="window-card">
+          <input
+            type="radio"
+            name="pickupWindow"
+            class="hidden-radio"
+            value="midnight"
+            onchange="setPickupWindow('midnight')"
+          />
+          <div class="window-name">Midnight Batch</div>
+          <div class="window-time">12 AM – 1 AM</div>
+          <div class="window-hint">pickup ok</div>
+        </label>
+      </div>
+
+      <!-- delivery info / placeholder -->
+      <div class="info-block">
+        <div class="info-head">Delivery</div>
+        <div class="info-body">
+          local delivery option coming soon.
+        </div>
+
+        <div class="toast-action">
+          <button class="btn-secondary full" disabled>
+            Delivery coming soon
+          </button>
+        </div>
+
+        <div class="info-note">
+          pickup: side door · unit 105 · 5512 17th Ave NW
+        </div>
+      </div>
+    </section>
+
+    <!-- CONTACT FORM -->
+    <section id="contact" class="block">
+      <form
+        action="https://formspree.io/f/xanlylkl"
+        method="POST"
+        class="contact-card"
+      >
+        <h2 class="section-title no-gap">questions?</h2>
+        <p class="section-desc tight">
+          ask about bread, pickup windows, or gift items.
+        </p>
+
+        <label class="form-field">
+          <span class="form-label">Your email</span>
+          <input class="input"
+            type="email"
+            name="email"
+            required
+            placeholder="you@example.com" />
+        </label>
+
+        <label class="form-field">
+          <span class="form-label">Message</span>
+          <textarea class="input textarea"
+            name="message"
+            rows="4"
+            required
+            placeholder="type your message here"></textarea>
+        </label>
+
+        <button class="btn-primary full" type="submit">Send</button>
+
+        <div class="form-foot">
+          handled securely by Formspree.
+        </div>
+      </form>
+    </section>
+  </section>
+
+  <!-- CART SIDEBAR -->
+  <aside class="cart-col">
+    <div class="cart-card">
+      <div class="cart-top">
+        <div class="cart-head">Your Order</div>
+        <div class="cart-total">
+          $<span id="cartTotal">0.00</span>
+        </div>
+      </div>
+
+      <div id="cartItems" class="cart-items empty-msg">
+        Cart is empty.
+      </div>
+
+      <a href="gift.html" class="btn-primary full alt-btn">
+        Add gift items
+      </a>
+
+      <button class="btn-checkout" onclick="openPayModal()">
+        Pay &amp; schedule pickup →
+      </button>
+
+      <p class="checkout-note">
+        choose pickup window, pay now, then swing by unit 105.
+      </p>
+
+      <div class="toast-blurb">
+        delivery coming soon.
+      </div>
+    </div>
+  </aside>
+</main>
+
+<footer class="footer">
+  <div class="wrap footer-inner">
+    <div class="foot-left">
+      <div class="foot-brand">ballard bread lab</div>
+      <div>side door pickup · unit 105</div>
+      <div>5512 17th Ave NW, Seattle, WA 98107</div>
+    </div>
+    <div class="foot-right">
+      <div>card checkout via Stripe</div>
+      <div>contact form active</div>
+    </div>
+  </div>
+</footer>
+
+<!-- PAYMENT MODAL -->
+<div id="payModal" class="reserve-modal hidden">
+  <div class="reserve-card">
+    <h2 class="reserve-title">checkout &amp; pickup</h2>
+    <p class="reserve-sub">
+      we’ll bake for your pickup slot.
+    </p>
+
+    <div class="reserve-summary-block">
+      <div class="reserve-summary-line">
+        <span class="reserve-summary-label">Pickup window</span>
+        <span class="reserve-summary-value" id="summaryWindow"></span>
+      </div>
+
+      <div class="reserve-summary-line">
+        <span class="reserve-summary-label">Items</span>
+        <span class="reserve-summary-value" id="summaryItems"></span>
+      </div>
+
+      <div class="reserve-summary-line">
+        <span class="reserve-summary-label">Total</span>
+        <span class="reserve-summary-value" id="summaryTotal"></span>
+      </div>
+    </div>
+
+    <div class="reserve-field">
+      <label class="reserve-label" for="buyerName">Your name</label>
+      <input class="reserve-input" id="buyerName" type="text" required />
+    </div>
+
+    <div class="reserve-field">
+      <label class="reserve-label" for="buyerPhone">Phone</label>
+      <input class="reserve-input" id="buyerPhone" type="tel" required />
+    </div>
+
+    <div class="reserve-field">
+      <label class="reserve-label" for="buyerEmail">Email</label>
+      <input class="reserve-input" id="buyerEmail" type="email" required />
+    </div>
+
+    <div class="reserve-pay-choices">
+      <div class="reserve-pay-label">Choose payment:</div>
+
+      <button class="btn-primary full" onclick="checkoutStripe()">
+        Pay with card (Stripe)
+      </button>
+    </div>
+
+    <div class="reserve-foot">
+      after payment you’ll get a receipt, and we’ll start dough.
+    </div>
+
+    <button class="reserve-cancel" onclick="closePayModal()">Cancel</button>
+  </div>
+</div>
+
+</body>
+</html>
