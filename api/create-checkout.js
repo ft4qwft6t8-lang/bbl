@@ -5,7 +5,7 @@ const stripe = require('stripe')(process.env.STRIPE_SECRET_KEY);
 
 export default async function handler(req, res) {
   // Set CORS headers to allow requests from your website
- res.setHeader('Access-Control-Allow-Origin', 'https://ballardbread.com');
+  res.setHeader('Access-Control-Allow-Origin', 'https://ballardbread.com');
   res.setHeader('Access-Control-Allow-Methods', 'POST, OPTIONS');
   res.setHeader('Access-Control-Allow-Headers', 'Content-Type');
 
@@ -37,8 +37,9 @@ export default async function handler(req, res) {
         payment_method_types: ['card'],
         line_items: lineItems,
         mode: 'payment',
-        success_url: `${req.headers.origin}/?success=true`, // Redirect back to your site on success
-        cancel_url: `${req.headers.origin}/?canceled=true`, // Redirect back on cancellation
+        // --- THIS IS THE UPDATED LINE ---
+        success_url: `https://ballardbread.com/success.html`,
+        cancel_url: `https://ballardbread.com/`, // Sends user back to the main page on cancel
         customer_email: email,
       });
       
