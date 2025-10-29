@@ -8,6 +8,22 @@
   <script defer src="script.js"></script>
 
   <style>
+
+.summary-items-container {
+  border-top: 1px solid #555;
+  border-bottom: 1px solid #555;
+  padding: 12px 0;
+  margin: 12px 0;
+}
+.summary-item, .summary-total-line {
+  display: flex;
+  justify-content: space-between;
+  padding: 4px 0;
+}
+.summary-total-line {
+  font-size: 1.2rem;
+  margin-top: 8px;
+}
     .modal {
       position: fixed;
       z-index: 1000;
@@ -371,9 +387,12 @@
       <p id="summaryWindow"></p>
 
       <h3>Order Summary</h3>
-      <p id="summaryItems"></p>
-
-      <h3>Total: <span id="summaryTotal"></span></h3>
+      <div id="summaryItems" class="summary-items-container">
+        </div>
+      <div class="summary-total-line">
+        <strong>Total</strong>
+        <strong id="summaryTotal">$0.00</strong>
+      </div>
 
       <form onsubmit="event.preventDefault(); checkoutStripe();">
         <label for="buyerName">Name</label>
@@ -390,6 +409,8 @@
         </button>
       </form>
     </div>
+  </div>
+</div>
   </div>
 </div>
 
