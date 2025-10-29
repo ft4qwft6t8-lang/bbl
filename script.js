@@ -128,17 +128,26 @@ function hydratePayModal() {
   const summaryItemsEl = document.getElementById("summaryItems");
   const summaryTotalEl = document.getElementById("summaryTotal");
 
-  const windowStr = pickupWindowSummary();
+  if (!summaryWindowEl || !summaryItemsEl || !summaryTotalEl) return;
 
-  const itemsStr = cart.length
-    ? cart.map(i => `${i.name} - $${i.price.toFixed(2)}`).join("; ")
-    : "(cart empty)";
+  // Set pickup window text
+  summaryWindowEl.textContent = pickupWindowSummary();
 
-  const totalStr = "$" + calcTotal(cart).toFixed(2);
+  // Create an HTML string with a line for each item
+  const itemsHtml = cart.length
+    ? cart.map(item => `
+        <div class="summary-item">
+          <span>${item.name}</span>
+          <span>$${item.price.toFixed(2)}</span>
+        </div>
+      `).join("")
+    : "<p>(Your cart is empty)</p>";
+  
+  // Use .innerHTML to render the new HTML
+  summaryItemsEl.innerHTML = itemsHtml;
 
-  if (summaryWindowEl) summaryWindowEl.textContent = windowStr;
-  if (summaryItemsEl) summaryItemsEl.textContent = itemsStr;
-  if (summaryTotalEl) summaryTotalEl.textContent = totalStr;
+  // Set total text
+  summaryTotalEl.textContent = "$" + calcTotal(cart).toFixed(2);
 }
 
 function openPayModal() {
