@@ -5,24 +5,59 @@
   <meta name="viewport" content="width=device-width,initial-scale=1.0"/>
   <title>ballard bread lab · order successful</title>
   <link rel="stylesheet" href="styles.css" />
+  <style>
+    .page-container {
+      display: flex;
+      flex-direction: column;
+      min-height: 100vh;
+    }
+    .content-main {
+      flex-grow: 1;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+  </style>
 </head>
-<body class="bg-body text-body">
+<body class="bg-body text-body page-container">
 
-<div class="wrap" style="text-align: center; padding-top: 5rem; padding-bottom: 5rem;">
-  
-  <h1 class="section-title">✅ Order Confirmed!</h1>
-  
-  <p class="section-desc" style="margin-bottom: 2rem;">
-    Thank you for your order. We've received it and will start baking shortly.
-    <br>
-    You will receive an email receipt from Stripe.
-  </p>
-  
-  <a href="index.html" class="btn-primary">
-    ← Back to Main Page
-  </a>
+<header class="header">
+  <div class="wrap header-inner">
+    <div class="brand-block">
+      <div class="brand-row">
+        <div class="brand-name">ballard bread lab</div>
+      </div>
+      <div class="brand-sub">whole wheat • olive oil • egg • baked to order</div>
+    </div>
+  </div>
+</header>
 
-</div>
+<main class="content-main">
+  <div class="wrap" style="text-align: center;">
+    <h1 class="section-title">✅ Order Confirmed!</h1>
+    <p class="section-desc" style="margin-bottom: 2rem;">
+      Thank you for your order. We've received it and will start baking shortly.
+      <br>
+      You will receive an email receipt from Stripe.
+    </p>
+    <a href="/" class="btn-primary">
+      ← Back to Main Page
+    </a>
+  </div>
+</main>
+
+<footer class="footer">
+  <div class="wrap footer-inner">
+    <div class="foot-left">
+      <div class="foot-brand">ballard bread lab</div>
+      <div>side door pickup · unit 105</div>
+      <div>5512 17th Ave NW, Seattle, WA 98107</div>
+    </div>
+    <div class="foot-right">
+      <div>card checkout via Stripe</div>
+    </div>
+  </div>
+</footer>
 
 </body>
 </html>
