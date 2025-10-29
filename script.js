@@ -1,7 +1,7 @@
 /* cart + checkout logic for ballard bread lab */
 
 /* PUBLIC ENDPOINT for your Vercel backend API */
-const CHECKOUT_ENDPOINT = "https://bbl-liart.vercel.app/api/create-checkout";
+const CHECKOUT_ENDPOINT = "https://bbl-rho.vercel.app/api/create-checkout";
 
 /* ---------------- CART STATE ---------------- */
 
