@@ -6,6 +6,83 @@
   <title>ballard bread lab · late night pickup</title>
   <link rel="stylesheet" href="styles.css" />
   <script defer src="script.js"></script>
+
+  <style>
+    .modal {
+      position: fixed;
+      z-index: 1000;
+      left: 0;
+      top: 0;
+      width: 100%;
+      height: 100%;
+      overflow: auto;
+      background-color: rgba(0, 0, 0, 0.6);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+    .modal.hidden {
+      display: none;
+    }
+    .modal-content {
+      background-color: #2c2c2c; /* Dark theme background */
+      color: #f0f0f0; /* Dark theme text */
+      margin: auto;
+      padding: 24px;
+      border: 1px solid #444;
+      border-radius: 8px;
+      width: 90%;
+      max-width: 500px;
+      box-shadow: 0 5px 15px rgba(0,0,0,0.3);
+    }
+    .modal-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      border-bottom: 1px solid #444;
+      padding-bottom: 12px;
+      margin-bottom: 16px;
+    }
+    .modal-header h2 {
+      margin: 0;
+      font-size: 1.5rem;
+    }
+    .modal-header button {
+      background: none;
+      border: none;
+      font-size: 1.8rem;
+      color: #aaa;
+      cursor: pointer;
+    }
+    .modal-body h3 {
+      margin-top: 16px;
+      margin-bottom: 8px;
+    }
+    .modal-body p {
+      margin: 4px 0;
+      color: #ccc;
+    }
+    .modal-body form {
+      margin-top: 24px;
+      display: flex;
+      flex-direction: column;
+      gap: 16px;
+    }
+    .modal-body label {
+      font-weight: bold;
+      margin-bottom: -8px;
+    }
+    .modal-body input {
+      padding: 10px;
+      border-radius: 4px;
+      border: 1px solid #555;
+      background-color: #333;
+      color: #f0f0f0;
+    }
+    .modal-body button[type="submit"] {
+      margin-top: 1rem;
+    }
+  </style>
 </head>
 <body class="bg-body text-body">
 
@@ -28,10 +105,8 @@
 </header>
 
 <main class="wrap main-grid">
-  <!-- MAIN CONTENT -->
   <section class="main-col">
 
-    <!-- BREADS -->
     <section id="breads" class="block">
       <div class="section-head">
         <h2 class="section-title">tonight’s loaves baked per order</h2>
@@ -42,24 +117,19 @@
 
       <div class="card-grid">
 
-        <!-- Midnight Herb Loaf -->
         <article class="card">
           <div class="photo-placeholder">
             <div>[photo: herb loaf]</div>
             <div class="photo-hint">placeholder</div>
           </div>
-
           <div class="card-head-row">
             <div class="card-title">Midnight Herb Loaf</div>
             <div class="card-price">$8</div>
           </div>
-
           <div class="card-text">
             Whole wheat + olive oil + egg. Garlic, onion, Italian herb blend.
           </div>
-
           <div class="card-organic">All organic ingredients.</div>
-
           <div class="card-ingredients">
             <div class="ingredients-label">Ingredients</div>
             <div class="ingredients-list">
@@ -69,31 +139,25 @@
             </div>
             <div class="allergen">Contains: Wheat, Egg.</div>
           </div>
-
           <button class="btn-primary full"
             onclick="addToCart('Midnight Herb Loaf', 8)">
             Add to Cart
           </button>
         </article>
 
-        <!-- Night Chocolate Loaf -->
         <article class="card">
           <div class="photo-placeholder">
             <div>[photo: chocolate loaf]</div>
             <div class="photo-hint">placeholder</div>
           </div>
-
           <div class="card-head-row">
             <div class="card-title">Night Chocolate Loaf</div>
             <div class="card-price">$9</div>
           </div>
-
           <div class="card-text">
             Olive oil, egg, cocoa, vanilla, cinnamon. Soft, slightly sweet.
           </div>
-
           <div class="card-organic">All organic ingredients.</div>
-
           <div class="card-ingredients">
             <div class="ingredients-label">Ingredients</div>
             <div class="ingredients-list">
@@ -103,31 +167,25 @@
             </div>
             <div class="allergen">Contains: Wheat, Egg.</div>
           </div>
-
           <button class="btn-primary full"
             onclick="addToCart('Night Chocolate Loaf', 9)">
             Add to Cart
           </button>
         </article>
 
-        <!-- Ballard Biscocho -->
         <article class="card">
           <div class="photo-placeholder">
             <div>[photo: biscocho]</div>
             <div class="photo-hint">placeholder</div>
           </div>
-
           <div class="card-head-row">
             <div class="card-title">Ballard Biscocho</div>
             <div class="card-price">$10</div>
           </div>
-
           <div class="card-text">
             crisp sweet bread bites, caramelized edges.
           </div>
-
           <div class="card-organic">All organic ingredients.</div>
-
           <div class="card-ingredients">
             <div class="ingredients-label">Ingredients</div>
             <div class="ingredients-list">
@@ -136,17 +194,14 @@
             </div>
             <div class="allergen">Contains: Wheat, Egg.</div>
           </div>
-
           <button class="btn-primary full"
             onclick="addToCart('Ballard Biscocho', 10)">
             Add to Cart
           </button>
         </article>
-
       </div>
     </section>
 
-    <!-- PICKUP WINDOWS -->
     <section id="pickup" class="block">
       <h2 class="section-title">choose pickup window</h2>
       <p class="section-desc">
@@ -208,26 +263,22 @@
         </label>
       </div>
 
-      <!-- delivery info / placeholder -->
       <div class="info-block">
         <div class="info-head">Delivery</div>
         <div class="info-body">
           local delivery option coming soon.
         </div>
-
         <div class="toast-action">
           <button class="btn-secondary full" disabled>
             Delivery coming soon
           </button>
         </div>
-
         <div class="info-note">
           pickup: side door · unit 105 · 5512 17th Ave NW
         </div>
       </div>
     </section>
 
-    <!-- CONTACT FORM -->
     <section id="contact" class="block">
       <form
         action="https://formspree.io/f/xanlylkl"
@@ -238,7 +289,6 @@
         <p class="section-desc tight">
           ask about bread, pickup windows, or gift items.
         </p>
-
         <label class="form-field">
           <span class="form-label">Your email</span>
           <input class="input"
@@ -247,7 +297,6 @@
             required
             placeholder="you@example.com" />
         </label>
-
         <label class="form-field">
           <span class="form-label">Message</span>
           <textarea class="input textarea"
@@ -256,9 +305,7 @@
             required
             placeholder="type your message here"></textarea>
         </label>
-
         <button class="btn-primary full" type="submit">Send</button>
-
         <div class="form-foot">
           handled securely by Formspree.
         </div>
@@ -266,7 +313,6 @@
     </section>
   </section>
 
-  <!-- CART SIDEBAR -->
   <aside class="cart-col">
     <div class="cart-card">
       <div class="cart-top">
@@ -312,6 +358,40 @@
     </div>
   </div>
 </footer>
+
+<div id="payModal" class="modal hidden">
+  <div class="modal-content">
+    <div class="modal-header">
+      <h2>Complete Your Order</h2>
+      <button onclick="closePayModal()">×</button>
+    </div>
+
+    <div class="modal-body">
+      <h3>Pickup Window</h3>
+      <p id="summaryWindow"></p>
+
+      <h3>Order Summary</h3>
+      <p id="summaryItems"></p>
+
+      <h3>Total: <span id="summaryTotal"></span></h3>
+
+      <form onsubmit="event.preventDefault(); checkoutStripe();">
+        <label for="buyerName">Name</label>
+        <input type="text" id="buyerName" placeholder="Your Name" required>
+
+        <label for="buyerPhone">Phone</label>
+        <input type="tel" id="buyerPhone" placeholder="For pickup notifications" required>
+
+        <label for="buyerEmail">Email</label>
+        <input type="email" id="buyerEmail" placeholder="For your receipt" required>
+
+        <button type="submit" class="btn-primary full">
+          Continue to Secure Payment
+        </button>
+      </form>
+    </div>
+  </div>
+</div>
 
 </body>
 </html>
