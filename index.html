@@ -394,20 +394,20 @@
         <strong id="summaryTotal">$0.00</strong>
       </div>
 
-      <form onsubmit="event.preventDefault(); checkoutStripe();">
-        <label for="buyerName">Name</label>
-        <input type="text" id="buyerName" placeholder="Your Name" required>
+      <form onsubmit="return false;">
+  <label for="buyerName">Name</label>
+  <input type="text" id="buyerName" placeholder="Your Name" required>
 
-        <label for="buyerPhone">Phone</label>
-        <input type="tel" id="buyerPhone" placeholder="For pickup notifications" required>
+  <label for="buyerPhone">Phone</label>
+  <input type="tel" id="buyerPhone" placeholder="For pickup notifications" required>
 
-        <label for="buyerEmail">Email</label>
-        <input type="email" id="buyerEmail" placeholder="For your receipt" required>
+  <label for="buyerEmail">Email</label>
+  <input type="email" id="buyerEmail" placeholder="For your receipt" required>
 
-        <button type="submit" class="btn-primary full">
-          Continue to Secure Payment
-        </button>
-      </form>
+  <button type="button" class="btn-primary full" onclick="checkoutStripe()">
+    Continue to Secure Payment
+  </button>
+</form>
     </div>
   </div>
 </div>
