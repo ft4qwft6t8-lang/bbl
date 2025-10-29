@@ -1,5 +1,3 @@
-
-javascript
 // This is server-side code for Vercel (Node.js)
 // File: /api/create-checkout.js
 
