@@ -48,16 +48,99 @@
       display: inline-block;
       margin: 0;
       padding: 0.25rem 0.5rem;
-      font-size: var(--fs-10);
-      font-weight: 500;
-      line-height: 1;
+    }
+    
+    /* Photo styling to match main page */
+    .photo-placeholder img {
+      width: 100%;        /* responsive to card width */
+      height: auto;       /* preserve aspect ratio */
+      max-width: 220px;   /* square constraint - same as bread height */
+      max-height: 220px;  /* square constraint - same as bread height */
+      object-fit: contain; /* fit entire image without cropping */
+      display: block;
+      border-radius: 6px;
+      filter: drop-shadow(0 0 8px rgba(34, 197, 94, 0.6)) drop-shadow(0 0 20px rgba(34, 197, 94, 0.3)); /* subtle herb-style glow */
+      transition: filter 0.3s ease;
+    }
+    
+    .photo-placeholder img:hover {
+      filter: drop-shadow(0 0 12px rgba(34, 197, 94, 0.7)) drop-shadow(0 0 25px rgba(34, 197, 94, 0.4));
+    }
+    
+    .photo-placeholder {
+      overflow: hidden; /* ensure cropped image doesn't overflow */
+    }
+    
+    /* Card grid styling to match main page */
+    .card-grid {
+      display: grid;
+      /* create responsive columns but cap card width to image width */
+      grid-template-columns: repeat(auto-fit, minmax(240px, 320px));
+      justify-content: center; /* center columns when there's extra space */
+      gap: 1rem;
+    }
+    
+    /* Ensure cards don't expand beyond the column width */
+    .card {
+      width: 100%;
+      max-width: 320px;
+      box-sizing: border-box;
+    }
+
+    /* Align card internals so buttons line up and descriptions don't stagger */
+    .card {
+      display: flex;
+      flex-direction: column;
+      /* make cards a consistent height so multiple cards align vertically */
+      min-height: 520px;
+    }
+
+    .card-head-row {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 0.5rem;
+    }
+
+    .card-text,
+    .card-organic,
+    .card-ingredients {
+      margin-top: 0.5rem;
+    }
+
+    /* Ensure organic label and Ingredients label share the same left alignment */
+    .card-organic,
+    .ingredients-label,
+    .card-text {
+      margin-left: 0;
+      padding-left: 0;
+      text-align: left;
+    }
+
+    /* Make sure ingredient label sits flush with other content and doesn't inherit monospace offset */
+    .ingredients-label {
+      display: block;
+    }
+
+    /* Push the Add to Cart / action button to the bottom of the card */
+    .card .btn-primary.full {
+      margin-top: auto;
+      align-self: stretch;
+    }
+    
+    /* Style gift product titles to match "All organic ingredients" */
+    .card-title {
       color: var(--text-green);
-      background-color: var(--pill-green-bg);
-      border: 1px solid var(--pill-green-border);
-      border-radius: 0.5rem;
+      font-size: var(--fs-13);
+      font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+    }
+    
+    /* Style Add to Cart buttons with monospace font and lowercase */
+    .card .btn-primary.full {
       font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
       text-transform: lowercase;
     }
+    
     .modal-header button {
       background: none;
       border: none;
@@ -193,8 +276,6 @@
           <div class="photo-placeholder">
             <img src="images/flash.png" alt="Silver Flashlight" loading="lazy">
           </div>
-            <div class="photo-hint">placeholder (silver)</div>
-          </div>
 
           <div class="card-head-row">
             <div class="card-title">Mini Flashlight (silver)</div>
@@ -202,7 +283,7 @@
           </div>
 
           <div class="card-text">
-            pocket light, metal housing, takes AAA. easy alley navigation.
+            pocket light, metal housing, takes AAA, easy alley navigation.
           </div>
 
           <button class="btn-primary full"
@@ -214,10 +295,8 @@
         <!-- Socks -->
         <article class="card">
           <div class="photo-placeholder">
-             <div class="photo-placeholder">
             <img src="images/eggplant.png" alt="Midnight Herb Loaf" loading="lazy">
           </div>
-
           <div class="card-head-row">
             <div class="card-title">Cotton Socks (eggplant)</div>
             <div class="card-price">$9</div>

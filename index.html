@@ -78,6 +78,59 @@
   object-fit: cover;  /* crop to fill if needed */
   display: block;
   border-radius: 6px;
+  transition: filter 0.3s ease;
+}
+
+/* Different glow for each bread - combined dramatic intensity + brightness */
+img[alt="Midnight Herb Loaf"] {
+  filter: brightness(1.1) drop-shadow(0 0 25px rgba(168, 85, 247, 0.8)) drop-shadow(0 0 50px rgba(147, 51, 234, 0.5)); /* purple for "midnight" theme */
+}
+
+img[alt="Midnight Herb Loaf"]:hover {
+  filter: brightness(1.15) drop-shadow(0 0 30px rgba(168, 85, 247, 0.9)) drop-shadow(0 0 60px rgba(147, 51, 234, 0.6));
+}
+
+img[alt="Night Chocolate Loaf"] {
+  filter: brightness(1.1) drop-shadow(0 0 30px rgba(139, 69, 19, 0.95)) drop-shadow(0 0 60px rgba(101, 67, 33, 0.7)); /* boosted intensity for chocolate */
+  transform: scale(1.08); /* slightly larger to match other breads */
+}
+
+img[alt="Night Chocolate Loaf"]:hover {
+  filter: brightness(1.15) drop-shadow(0 0 35px rgba(139, 69, 19, 1)) drop-shadow(0 0 70px rgba(101, 67, 33, 0.8));
+  transform: scale(1.08);
+}
+
+img[alt="Ballard Biscocho"] {
+  filter: brightness(1.1) drop-shadow(0 0 25px rgba(245, 158, 11, 0.8)) drop-shadow(0 0 50px rgba(245, 158, 11, 0.5)); /* warm golden */
+}
+
+img[alt="Ballard Biscocho"]:hover {
+  filter: brightness(1.15) drop-shadow(0 0 30px rgba(245, 158, 11, 0.9)) drop-shadow(0 0 60px rgba(245, 158, 11, 0.6));
+}
+
+/* Style bread titles to match gift page styling */
+.card-title {
+  font-size: var(--fs-13);
+  font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+}
+
+/* Match title colors to glow colors */
+.midnight-herb-card .card-title {
+  color: rgba(168, 85, 247, 1); /* purple to match midnight glow */
+}
+
+.chocolate-loaf-card .card-title {
+  color: rgba(139, 69, 19, 1); /* chocolate brown to match glow */
+}
+
+.biscocho-card .card-title {
+  color: rgba(245, 158, 11, 1); /* golden amber to match glow */
+}
+
+/* Style Add to Cart buttons with monospace font and lowercase */
+.card .btn-primary.full {
+  font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+  text-transform: lowercase;
 }
 
 .photo-placeholder {
@@ -263,7 +316,7 @@
 
       <div class="card-grid">
 
-        <article class="card">
+        <article class="card midnight-herb-card">
           <div class="photo-placeholder">
             <img src="images/midnight-herb-loaf.png" alt="Midnight Herb Loaf" loading="lazy">
           </div>
@@ -290,7 +343,7 @@
           </button>
         </article>
 
-        <article class="card">
+        <article class="card chocolate-loaf-card">
           <div class="photo-placeholder">
             <img src="images/night-chocolate-loaf.png" alt="Night Chocolate Loaf" loading="lazy">
           </div>
@@ -317,7 +370,7 @@
           </button>
         </article>
 
-        <article class="card">
+        <article class="card biscocho-card">
           <div class="photo-placeholder">
             <img src="images/ballard-biscocho.png" alt="Ballard Biscocho" loading="lazy">
           </div>
