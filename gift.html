@@ -6,6 +6,129 @@
   <title>ballard bread lab · gift items</title>
   <link rel="stylesheet" href="styles.css" />
   <script defer src="script.js"></script>
+  <style>
+    /* Modal styles from main page */
+    .modal {
+      position: fixed;
+      z-index: 1000;
+      left: 0;
+      top: 0;
+      width: 100%;
+      height: 100%;
+      overflow: auto;
+      background-color: rgba(0, 0, 0, 0.75);
+      backdrop-filter: blur(4px);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+    .modal.hidden {
+      display: none;
+    }
+    .modal-content {
+      background-color: var(--bg-card);
+      color: var(--text-main);
+      margin: auto;
+      padding: 1.5rem;
+      border: 1px solid var(--border-color);
+      border-radius: var(--radius-xl);
+      width: 90%;
+      max-width: 500px;
+      box-shadow: var(--shadow-card);
+    }
+    .modal-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      border-bottom: 1px solid var(--border-color);
+      padding-bottom: 12px;
+      margin-bottom: 16px;
+    }
+    .modal-header h2 {
+      margin: 0;
+      font-size: var(--fs-18);
+      font-weight: 600;
+      color: var(--text-main);
+    }
+    .modal-header button {
+      background: none;
+      border: none;
+      font-size: 1.8rem;
+      color: var(--text-dim);
+      cursor: pointer;
+      transition: color 0.12s;
+    }
+    .modal-header button:hover {
+      color: var(--text-main);
+    }
+    .modal-body h3 {
+      margin-top: 16px;
+      margin-bottom: 8px;
+      font-size: var(--fs-14);
+      font-weight: 600;
+      color: var(--text-main);
+    }
+    .modal-body p {
+      margin: 4px 0;
+      color: var(--text-mid);
+      font-size: var(--fs-13);
+    }
+    .modal-body form {
+      margin-top: 24px;
+      display: flex;
+      flex-direction: column;
+      gap: 16px;
+    }
+    .modal-body label {
+      font-weight: 600;
+      font-size: var(--fs-12);
+      color: var(--text-mid);
+      margin-bottom: -8px;
+    }
+    .modal-body input {
+      padding: 10px 12px;
+      border-radius: var(--radius-lg);
+      border: 1px solid var(--border-color);
+      background-color: var(--bg-accent);
+      color: var(--text-main);
+      font-size: var(--fs-13);
+      font-family: inherit;
+      transition: border-color 0.12s;
+    }
+    .modal-body input:focus {
+      outline: none;
+      border-color: var(--pill-green-border);
+    }
+    .modal-body button[type="submit"],
+    .modal-body button[type="button"] {
+      margin-top: 0.5rem;
+    }
+    .summary-items-container {
+      border-top: 1px solid var(--border-color);
+      border-bottom: 1px solid var(--border-color);
+      padding: 12px 0;
+      margin: 12px 0;
+    }
+    .summary-item {
+      display: flex;
+      justify-content: space-between;
+      padding: 6px 0;
+      font-size: var(--fs-13);
+      color: var(--text-main);
+    }
+    .summary-item span:first-child {
+      color: var(--text-mid);
+    }
+    .summary-total-line {
+      display: flex;
+      justify-content: space-between;
+      padding: 8px 0;
+      font-size: var(--fs-16);
+      font-weight: 600;
+      margin-top: 8px;
+      color: var(--text-main);
+    }
+  </style>
 </head>
 <body class="bg-body text-body">
 
@@ -13,7 +136,7 @@
   <div class="wrap header-inner">
     <div class="brand-block">
       <div class="brand-row">
-        <div class="brand-name">ballard bread lab</div>
+        <a href="index.html" class="brand-name">ballard bread lab</a>
         <div class="pill pill-green">add-ons / gifts</div>
       </div>
       <div class="brand-sub">late night pickup · preorder only</div>
@@ -32,7 +155,10 @@
 
     <section class="block">
       <div class="section-head">
-        <h2 class="section-title">gifts / extras</h2>
+        <div class="section-title">
+          <a href="index.html" class="pill pill-green">tonight's loaves baked per order</a>
+          <a href="gift.html" class="pill pill-green active">giftstore</a>
+        </div>
         <p class="section-desc">
           add-ons ride along with your bread pickup window.
         </p>
@@ -136,7 +262,7 @@
   <aside class="cart-col">
     <div class="cart-card">
       <div class="cart-top">
-        <div class="cart-head">Your Order</div>
+        <div class="pill pill-green">your order</div>
         <div class="cart-total">
           $<span id="cartTotal">0.00</span>
         </div>
@@ -145,13 +271,94 @@
       <div id="cartItems" class="cart-items empty-msg">
         Cart is empty.
       </div>
+      
+    <section id="pickup" class="block">
+      <h2 class="pill pill-green">choose pickup window</h2>
+      <p class="section-desc">
+        each loaf is started for your slot.
+      </p>
+
+      <div class="window-grid">
+        <label class="window-card">
+          <input
+            type="radio"
+            name="pickupWindow"
+            class="hidden-radio"
+            value="afternoon"
+            checked
+            onchange="setPickupWindow('afternoon')"
+          />
+          <div class="window-name">Afternoon Batch</div>
+          <div class="window-time">3 PM – 4 PM</div>
+          <div class="window-hint">orders in before 12 PM</div>
+        </label>
+
+        <label class="window-card">
+          <input
+            type="radio"
+            name="pickupWindow"
+            class="hidden-radio"
+            value="evening"
+            onchange="setPickupWindow('evening')"
+          />
+          <div class="window-name">Evening Batch</div>
+          <div class="window-time">6 PM – 7 PM</div>
+          <div class="window-hint">orders in before 3 PM</div>
+        </label>
+
+        <label class="window-card">
+          <input
+            type="radio"
+            name="pickupWindow"
+            class="hidden-radio"
+            value="night"
+            onchange="setPickupWindow('night')"
+          />
+          <div class="window-name">Night Batch</div>
+          <div class="window-time">9 PM – 10 PM</div>
+          <div class="window-hint">orders in before 6 PM</div>
+        </label>
+
+        <label class="window-card">
+          <input
+            type="radio"
+            name="pickupWindow"
+            class="hidden-radio"
+            value="midnight"
+            onchange="setPickupWindow('midnight')"
+          />
+          <div class="window-name">Midnight Batch</div>
+          <div class="window-time">12 AM – 1 AM</div>
+          <div class="window-hint">pickup ok</div>
+        </label>
+      </div>
+
+      <div class="info-block">
+        <div class="info-head">Delivery</div>
+        <div class="info-body">
+          local delivery option coming soon.
+        </div>
+        <div class="toast-action">
+          <button class="btn-secondary full" disabled>
+            Delivery coming soon
+          </button>
+        </div>
+        <div class="info-note">
+          pickup: side door · unit 105 · 5512 17th Ave NW
+        </div>
+      </div>
+    </section>
+      
+      <a href="index.html" class="btn-primary full alt-btn">
+        Add bread items
+      </a>
 
       <button class="btn-checkout" onclick="openPayModal()">
         Pay &amp; schedule pickup →
       </button>
 
       <p class="checkout-note">
-        pickup is at unit 105, prepaid only.
+        choose pickup window, pay now, then swing by unit 105.
       </p>
 
       <div class="toast-blurb">
@@ -170,7 +377,7 @@
 <footer class="footer">
   <div class="wrap footer-inner">
     <div class="foot-left">
-      <div class="foot-brand">ballard bread lab</div>
+      <div class="pill pill-green">ballard bread lab</div>
       <div>side door pickup · unit 105</div>
       <div>5512 17th Ave NW, Seattle, WA 98107</div>
     </div>
@@ -182,58 +389,41 @@
 </footer>
 
 <!-- PAYMENT MODAL -->
-<div id="payModal" class="reserve-modal hidden">
-  <div class="reserve-card">
-    <h2 class="reserve-title">checkout &amp; pickup</h2>
-    <p class="reserve-sub">
-      we’ll bake / pack for your pickup slot.
-    </p>
+<div id="payModal" class="modal hidden">
+    <div class="modal-content">
+    <div class="modal-header">
+      <h2>Complete Your Order</h2>
+      <button onclick="closePayModal()">×</button>
+    </div>
 
-    <div class="reserve-summary-block">
-      <div class="reserve-summary-line">
-        <span class="reserve-summary-label">Pickup window</span>
-        <span class="reserve-summary-value" id="summaryWindow"></span>
+    <div class="modal-body">
+      <h3>Pickup Window</h3>
+      <p id="summaryWindow"></p>
+
+      <h3>Order Summary</h3>
+      <div id="summaryItems" class="summary-items-container">
+        </div>
+      <div class="summary-total-line">
+        <strong>Total</strong>
+        <strong id="summaryTotal">$0.00</strong>
       </div>
 
-      <div class="reserve-summary-line">
-        <span class="reserve-summary-label">Items</span>
-        <span class="reserve-summary-value" id="summaryItems"></span>
-      </div>
+      <form onsubmit="return false;">
+        
+  <label for="buyerName">Name</label>
+  <input type="text" id="buyerName" placeholder="Your Name" required>
 
-      <div class="reserve-summary-line">
-        <span class="reserve-summary-label">Total</span>
-        <span class="reserve-summary-value" id="summaryTotal"></span>
-      </div>
+  <label for="buyerPhone">Phone</label>
+  <input type="tel" id="buyerPhone" placeholder="For pickup notifications" required>
+
+  <label for="buyerEmail">Email</label>
+  <input type="email" id="buyerEmail" placeholder="For your receipt" required>
+
+  <button type="button" class="btn-primary full" onclick="checkoutStripe()">
+    Continue to Secure Payment
+  </button>
+</form>
     </div>
-
-    <div class="reserve-field">
-      <label class="reserve-label" for="buyerName">Your name</label>
-      <input class="reserve-input" id="buyerName" type="text" required />
-    </div>
-
-    <div class="reserve-field">
-      <label class="reserve-label" for="buyerPhone">Phone</label>
-      <input class="reserve-input" id="buyerPhone" type="tel" required />
-    </div>
-
-    <div class="reserve-field">
-      <label class="reserve-label" for="buyerEmail">Email</label>
-      <input class="reserve-input" id="buyerEmail" type="email" required />
-    </div>
-
-    <div class="reserve-pay-choices">
-      <div class="reserve-pay-label">Choose payment:</div>
-
-      <button class="btn-primary full" onclick="checkoutStripe()">
-        Pay with card (Stripe)
-      </button>
-    </div>
-
-    <div class="reserve-foot">
-      after payment you’ll get a receipt, and we’ll start dough / packing.
-    </div>
-
-    <button class="reserve-cancel" onclick="closePayModal()">Cancel</button>
   </div>
 </div>
 

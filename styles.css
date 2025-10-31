@@ -84,6 +84,12 @@ body {
   font-weight: 600;
   color: var(--text-main);
   letter-spacing: -0.03em;
+  text-decoration: none;
+  transition: color 0.12s ease;
+}
+
+.brand-name:hover {
+  color: var(--text-green);
 }
 
 .pill {
@@ -98,11 +104,26 @@ body {
   border: 1px solid;
   font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
   font-weight: 500;
+  text-decoration: none;
+  transition: background-color 0.12s ease, border-color 0.12s ease;
 }
 .pill-green {
   background-color: var(--pill-green-bg);
   border-color: var(--pill-green-border);
   color: var(--text-green);
+}
+.pill-green:hover {
+  background-color: rgba(84, 255, 138, 0.15);
+  border-color: rgba(84, 255, 138, 0.5);
+}
+.pill-green.active {
+  background-color: var(--text-green);
+  color: #000;
+  border-color: var(--text-green);
+}
+.pill-green.active:hover {
+  background-color: #76ffa0;
+  border-color: #76ffa0;
 }
 
 .brand-sub {

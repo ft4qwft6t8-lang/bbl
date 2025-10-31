@@ -33,7 +33,6 @@ function addToCart(name, price) {
   } catch (e) {
     console.warn('addToCart persist failed', e);
   }
-  renderCart();
   renderCartItems();
   updateCartTotal();
 }
@@ -52,7 +51,6 @@ function removeOneFromCart(name) {
   } catch (e) {
     console.warn('removeOneFromCart persist failed', e);
   }
-  renderCart();
   renderCartItems();
   updateCartTotal();
 }
@@ -159,6 +157,9 @@ function setPickupWindow(code) {
 }
 
 function pickupWindowSummary() {
+  if (!selectedPickupWindow || !selectedPickupWindow.label) {
+    return "Afternoon Batch | 3 PM – 4 PM"; // fallback
+  }
   return `${selectedPickupWindow.label} | ${selectedPickupWindow.time}`;
 }
 
@@ -332,14 +333,16 @@ function calcTotal(itemsArray) {
 function openPayModal() {
   const cart = loadCart();
   if (!cart.length) {
-    alert("Your cart is empty.");
+    alert("Your cart is empty. Add some items first, then choose a pickup window to checkout!");
     return;
   }
 
   hydratePayModal();
 
   const modal = document.getElementById("payModal");
-  if (modal) modal.classList.remove("hidden");
+  if (modal) {
+    modal.classList.remove("hidden");
+  }
 }
 
 function closePayModal() {
@@ -361,9 +364,15 @@ async function checkoutStripe() {
   const buyerEmail = document.getElementById("buyerEmail")?.value.trim() || "";
 
   if (!buyerName || !buyerPhone || !buyerEmail) {
-    alert("Please fill name / phone / email.");
+    alert("Please fill in your name, phone, and email.");
     return;
   }
+
+  // Add loading state
+  const checkoutBtn = document.querySelector('button[onclick="checkoutStripe()"]');
+  const originalText = checkoutBtn.textContent;
+  checkoutBtn.textContent = "Processing...";
+  checkoutBtn.disabled = true;
 
   const payload = {
     items: cart.map(i => ({
@@ -384,7 +393,7 @@ async function checkoutStripe() {
     });
 
     if (!res.ok) {
-      alert("Checkout unavailable.");
+      alert("Checkout temporarily unavailable. Please try again in a few minutes.");
       return;
     }
 
@@ -392,10 +401,14 @@ async function checkoutStripe() {
     if (data.url) {
       window.location.href = data.url;
     } else {
-      alert("Checkout error.");
+      alert("There was an issue processing your order. Please try again.");
     }
   } catch (err) {
-    alert("Network error.");
+    alert("Connection error. Please check your internet and try again.");
+  } finally {
+    // Reset button state
+    checkoutBtn.textContent = originalText;
+    checkoutBtn.disabled = false;
   }
 }
 
@@ -403,7 +416,6 @@ async function checkoutStripe() {
 
 function initializeCart() {
   // load from storage and render both cart views
-  renderCart();
   renderCartItems();
   updateCartTotal();
 }
@@ -442,4 +454,10 @@ document.addEventListener('DOMContentLoaded', () => {
   });
 
   updateSelection();
+  
+  // Ensure pickup window is set on page load
+  const checkedWindow = document.querySelector('input[name="pickupWindow"]:checked');
+  if (checkedWindow) {
+    setPickupWindow(checkedWindow.value);
+  }
 });
