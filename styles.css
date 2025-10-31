@@ -87,6 +87,10 @@ body {
 }
 
 .pill {
+  display: inline-flex;
+  align-items: center;
+  align-self: flex-start; /* prevent flex-column from stretching the pill */
+  width: auto;
   padding: .25rem .5rem;
   font-size: var(--fs-10);
   line-height: 1;
@@ -144,10 +148,39 @@ body {
   gap: 1rem;
 }
 
+/* ensure headings and descriptions inside blocks don't use browser default margins */
+.block h1,
+.block h2,
+.block h3,
+.block h4 { margin: 0; }
+
+.pill { margin: 0; }          /* pill-wrapped headings */
+.cart-head { margin: 0; }     /* cart heading variant */
+
+.section-desc {
+  margin: 0;
+  font-size: var(--fs-13);
+  color: var(--text-dim);
+  max-width: none; /* allow full width so it doesn't wrap prematurely */
+  line-height: 1.5;
+}
+
 .section-head {
   display: flex;
   flex-direction: column;
-  gap: .5rem;
+  gap: .5rem; /* fixed: removed stray space so this rule is valid */
+}
+
+/* let the gap value control spacing instead of default h2/p margins */
+.section-head .section-title { margin: 0; }
+.section-head .section-desc  { margin: 0; }
+
+/* override any earlier max-width so this section can use full column width */
+.section-head .section-desc {
+  max-width: none;
+  margin: 0;
+  line-height: 1.4;
+  white-space: normal; /* allow normal wrapping */
 }
 
 .section-title {
@@ -356,44 +389,67 @@ body {
   color: var(--text-dim);
 }
 
-.window-grid {
-  display:grid;
-  gap:1rem;
-}
-@media(min-width:520px){
-  .window-grid {
-    grid-template-columns: repeat(2,minmax(0,1fr));
-  }
-}
+/* pickup window card visuals — smaller, subtler */
+.window-grid { display: grid; gap: .4rem; }
+
 .window-card {
-  background-color: var(--bg-card);
-  border:1px solid var(--border-color);
-  border-radius: var(--radius-xl);
-  box-shadow: var(--shadow-card);
-  padding:1rem;
-  cursor:pointer;
-  display:flex;
-  flex-direction:column;
-  gap:.25rem;
-  min-width: 0;
-  box-sizing: border-box;
-  max-width: 100%;
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  gap: .08rem;
+  padding: .45rem .5rem;          /* smaller card */
+  border: 1px solid var(--border-color, #444);
+  border-radius: .4rem;
+  background: transparent;
+  cursor: pointer;
+  transition: box-shadow .12s ease, transform .06s ease, border-color .1s ease, background-color .12s ease;
+  user-select: none;
+  font-size: 0.95rem;
 }
-.window-name {
-  color:var(--text-main);
-  font-weight:600;
-  font-size:var(--fs-14);
+
+/* gentle, reduced hover */
+.window-card:hover {
+  transform: translateY(-1px);
+  box-shadow: 0 6px 12px rgba(0,0,0,0.08);
+  border-color: var(--pill-green-border, #6b8e4a);
 }
-.window-time {
-  color:var(--text-mid);
-  font-size:var(--fs-12);
-  font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+
+/* hide native radio but keep accessible */
+.hidden-radio {
+  position: absolute;
+  opacity: 0;
+  width: 0;
+  height: 0;
+  pointer-events: none;
 }
-.window-hint {
-  color:var(--text-dim);
-  font-size:var(--fs-10);
-  line-height:1.4;
+
+/* selected appearance (JS adds .selected; also style inner elements when checked) */
+.window-card.selected {
+  border-color: var(--pill-green-border, #6b8e4a);
+  background-color: rgba(110,170,90,0.04);
+  box-shadow: 0 8px 18px rgba(0,0,0,0.06);
 }
+
+/* emphasize text when selected */
+.window-card.selected .window-name,
+.window-card input:checked ~ .window-name {
+  color: var(--text-green, #7fb26a);
+  font-weight: 600;
+}
+
+/* smaller time/hint typography */
+.window-name { font-size: 0.95rem; }
+.window-time { font-size: 0.82rem; color: var(--text-mid); }
+.window-hint { font-size: 0.78rem; color: var(--text-dim); }
+
+/* focus for keyboard users */
+.window-card:focus-within {
+  outline: 3px solid rgba(127,178,106,0.10);
+  outline-offset: 2px;
+}
+
+/* ensure inner pieces take full width */
+.window-card > div { width: 100%; }
 
 .hidden-radio {
   display:none;
