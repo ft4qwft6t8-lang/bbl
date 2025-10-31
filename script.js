@@ -18,8 +18,7 @@ function saveCart(cart) {
   localStorage.setItem("cart", JSON.stringify(cart));
 }
 
-// simple cart: key = item name -> { price, qty }
-const cart = {};
+// Cart state: canonical source is the persisted array in localStorage.
 
 /**
  * Add one of an item to the cart.
@@ -27,8 +26,14 @@ const cart = {};
  */
 function addToCart(name, price) {
   price = Number(price);
-  if (!cart[name]) cart[name] = { price, qty: 0 };
-  cart[name].qty += 1;
+  try {
+    const arr = loadCart() || [];
+    arr.push({ name, price });
+    saveCart(arr);
+  } catch (e) {
+    console.warn('addToCart persist failed', e);
+  }
+  renderCart();
   renderCartItems();
   updateCartTotal();
 }
@@ -37,9 +42,17 @@ function addToCart(name, price) {
  * Decrement one of an item (remove when qty reaches 0).
  */
 function removeOneFromCart(name) {
-  if (!cart[name]) return;
-  cart[name].qty -= 1;
-  if (cart[name].qty <= 0) delete cart[name];
+  try {
+    const arr = loadCart() || [];
+    const idx = arr.findIndex(i => i.name === name);
+    if (idx !== -1) {
+      arr.splice(idx, 1);
+      saveCart(arr);
+    }
+  } catch (e) {
+    console.warn('removeOneFromCart persist failed', e);
+  }
+  renderCart();
   renderCartItems();
   updateCartTotal();
 }
@@ -52,8 +65,8 @@ function renderCartItems() {
   if (!container) return;
   container.innerHTML = '';
 
-  const names = Object.keys(cart);
-  if (names.length === 0) {
+  const stored = loadCart() || [];
+  if (!stored.length) {
     container.classList.add('empty-msg');
     container.textContent = 'Cart is empty.';
     return;
@@ -61,8 +74,15 @@ function renderCartItems() {
 
   container.classList.remove('empty-msg');
 
-  names.forEach(name => {
-    const item = cart[name];
+  // group by name
+  const groups = stored.reduce((acc, item) => {
+    if (!acc[item.name]) acc[item.name] = { price: item.price, qty: 0 };
+    acc[item.name].qty += 1;
+    return acc;
+  }, {});
+
+  Object.keys(groups).forEach(name => {
+    const item = groups[name];
     const row = document.createElement('div');
     row.className = 'summary-item';
     row.innerHTML = `
@@ -89,8 +109,8 @@ function renderCartItems() {
  */
 function updateCartTotal() {
   const totalEl = document.getElementById('cartTotal');
-  let total = 0;
-  Object.values(cart).forEach(i => total += i.price * i.qty);
+  const stored = loadCart() || [];
+  const total = stored.reduce((sum, it) => sum + (Number(it.price) || 0), 0);
   if (totalEl) totalEl.textContent = total.toFixed(2);
 }
 
@@ -219,10 +239,56 @@ function renderCart() {
   totalEl.textContent = total.toFixed(2);
 }
 
+/* ---------------- PERSISTENCE HELPERS ---------------- */
+
+// Add one item to the persisted cart array in localStorage
+function persistAddItem(name, price) {
+  try {
+    const arr = loadCart() || [];
+    arr.push({ name, price: Number(price) });
+    saveCart(arr);
+  } catch (e) {
+    // ignore storage failures
+    console.warn('persistAddItem failed', e);
+  }
+}
+
+// Remove one occurrence of an item by name from persisted array
+function persistRemoveOne(name) {
+  try {
+    const arr = loadCart() || [];
+    const idx = arr.findIndex(i => i.name === name);
+    if (idx !== -1) {
+      arr.splice(idx, 1);
+      saveCart(arr);
+    }
+  } catch (e) {
+    console.warn('persistRemoveOne failed', e);
+  }
+}
+
+// Build the in-memory grouped `cart` object from the persisted array
+function syncInMemoryFromStorage() {
+  try {
+    const arr = loadCart();
+    // reset in-memory cart
+    Object.keys(cart).forEach(k => delete cart[k]);
+    if (!Array.isArray(arr)) return;
+    arr.forEach(item => {
+      const name = item.name;
+      const price = Number(item.price) || 0;
+      if (!cart[name]) cart[name] = { price, qty: 0 };
+      cart[name].qty += 1;
+    });
+  } catch (e) {
+    console.warn('syncInMemoryFromStorage failed', e);
+  }
+}
+
 /* ---------------- MODAL CONTROL ---------------- */
 
 function hydratePayModal() {
-  const cart = loadCart();
+  const stored = loadCart();
   const summaryWindowEl = document.getElementById("summaryWindow");
   const summaryItemsEl = document.getElementById("summaryItems");
   const summaryTotalEl = document.getElementById("summaryTotal");
@@ -232,21 +298,39 @@ function hydratePayModal() {
   // Set pickup window text
   summaryWindowEl.textContent = pickupWindowSummary();
 
+  // Prefer the persisted cart (array). If none, fall back to the in-memory grouped `cart` object.
+  let itemsArr = Array.isArray(stored) && stored.length ? stored : [];
+  if (!itemsArr.length) {
+    // build an array from the in-memory grouped cart object
+    Object.keys(cart).forEach(name => {
+      const it = cart[name];
+      for (let i = 0; i < (it.qty || 0); i++) {
+        itemsArr.push({ name, price: Number(it.price) });
+      }
+    });
+  }
+
   // Create an HTML string with a line for each item
-  const itemsHtml = cart.length
-    ? cart.map(item => `
+  const itemsHtml = itemsArr.length
+    ? itemsArr.map(item => `
         <div class="summary-item">
           <span>${item.name}</span>
-          <span>$${item.price.toFixed(2)}</span>
+          <span>$${Number(item.price).toFixed(2)}</span>
         </div>
       `).join("")
     : "<p>(Your cart is empty)</p>";
-  
+
   // Use .innerHTML to render the new HTML
   summaryItemsEl.innerHTML = itemsHtml;
 
   // Set total text
-  summaryTotalEl.textContent = "$" + calcTotal(cart).toFixed(2);
+  summaryTotalEl.textContent = "$" + calcTotal(itemsArr).toFixed(2);
+}
+
+// calculate total for an array of items [{name, price}, ...]
+function calcTotal(itemsArray) {
+  if (!Array.isArray(itemsArray)) return 0;
+  return itemsArray.reduce((sum, it) => sum + (Number(it.price) || 0), 0);
 }
 
 function openPayModal() {
@@ -322,7 +406,11 @@ async function checkoutStripe() {
 /* ---------------- INIT ---------------- */
 
 document.addEventListener("DOMContentLoaded", () => {
+  // sync persisted array into the in-memory grouped cart, then render
+  syncInMemoryFromStorage();
   renderCart();
+  renderCartItems();
+  updateCartTotal();
 });
 
 document.addEventListener('DOMContentLoaded', () => {

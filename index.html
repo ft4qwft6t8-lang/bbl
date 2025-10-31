@@ -11,9 +11,78 @@
     
 .card-grid {
   display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: 1rem; 
-}   
+  /* create responsive columns but cap card width to image width */
+  grid-template-columns: repeat(auto-fit, minmax(240px, 320px));
+  justify-content: center; /* center columns when there's extra space */
+  gap: 1rem;
+}
+/* Ensure cards don't expand beyond the column width */
+.card {
+  width: 100%;
+  max-width: 320px;
+  box-sizing: border-box;
+}
+
+/* Align card internals so buttons line up and descriptions don't stagger */
+.card {
+  display: flex;
+  flex-direction: column;
+  /* make cards a consistent height so multiple cards align vertically */
+  min-height: 520px;
+}
+
+.card-head-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.card-text,
+.card-organic,
+.card-ingredients {
+  margin-top: 0.5rem;
+}
+
+/* Ensure organic label and Ingredients label share the same left alignment */
+.card-organic,
+.ingredients-label,
+.card-text {
+  margin-left: 0;
+  padding-left: 0;
+  text-align: left;
+}
+
+/* Make sure ingredient label sits flush with other content and doesn't inherit monospace offset */
+.ingredients-label {
+  display: block;
+}
+
+/* Push the Add to Cart / action button to the bottom of the card */
+.card .btn-primary.full {
+  margin-top: auto;
+  align-self: stretch;
+}
+
+/* Prevent ingredients block from stretching cards too tall */
+.card-ingredients .ingredients-list {
+  max-height: 110px;
+  overflow: auto;
+}
+/* Constrain product photos so they fit nicely in the card */
+.photo-placeholder img {
+  width: 100%;        /* responsive to card width */
+  height: auto;       /* preserve aspect ratio */
+  max-width: 320px;   /* don't exceed this width */
+  max-height: 220px;  /* limit height so it's not too large */
+  object-fit: cover;  /* crop to fill if needed */
+  display: block;
+  border-radius: 6px;
+}
+
+.photo-placeholder {
+  overflow: hidden; /* ensure cropped image doesn't overflow */
+}
 .summary-items-container {
   border-top: 1px solid #555;
   border-bottom: 1px solid #555;
@@ -140,8 +209,7 @@
 
         <article class="card">
           <div class="photo-placeholder">
-            <div>[photo: herb loaf]</div>
-            <div class="photo-hint">placeholder</div>
+            <img src="images/midnight-herb-loaf.png" alt="Midnight Herb Loaf" loading="lazy">
           </div>
           <div class="card-head-row">
             <div class="card-title">Midnight Herb Loaf</div>
@@ -168,8 +236,7 @@
 
         <article class="card">
           <div class="photo-placeholder">
-            <div>[photo: chocolate loaf]</div>
-            <div class="photo-hint">placeholder</div>
+            <img src="images/night-chocolate-loaf.png" alt="Night Chocolate Loaf" loading="lazy">
           </div>
           <div class="card-head-row">
             <div class="card-title">Night Chocolate Loaf</div>
@@ -196,14 +263,14 @@
 
         <article class="card">
           <div class="photo-placeholder">
-            <img src="https://github.com/klosaaa/bbl/blob/e27c7fd8751dd18ea9dcef157b01854165951778/images/ballard-biscocho.png">
+            <img src="images/ballard-biscocho.png" alt="Ballard Biscocho" loading="lazy">
           </div>
           <div class="card-head-row">
             <div class="card-title">Ballard Biscocho</div>
             <div class="card-price">$10</div>
           </div>
           <div class="card-text">
-            crisp sweet bread bites, caramelized edges.
+            Crisp sweet bread bites, caramelized edges.
           </div>
           <div class="card-organic">All organic ingredients.</div>
           <div class="card-ingredients">
