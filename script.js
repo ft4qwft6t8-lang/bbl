@@ -298,33 +298,29 @@ function hydratePayModal() {
   // Set pickup window text
   summaryWindowEl.textContent = pickupWindowSummary();
 
-  // Prefer the persisted cart (array). If none, fall back to the in-memory grouped `cart` object.
-  let itemsArr = Array.isArray(stored) && stored.length ? stored : [];
-  if (!itemsArr.length) {
-    // build an array from the in-memory grouped cart object
-    Object.keys(cart).forEach(name => {
-      const it = cart[name];
-      for (let i = 0; i < (it.qty || 0); i++) {
-        itemsArr.push({ name, price: Number(it.price) });
-      }
-    });
-  }
+  // Group items by name with quantities
+  const groups = (stored || []).reduce((acc, item) => {
+    const key = item.name;
+    if (!acc[key]) acc[key] = { name: item.name, price: item.price, qty: 0 };
+    acc[key].qty += 1;
+    return acc;
+  }, {});
 
-  // Create an HTML string with a line for each item
-  const itemsHtml = itemsArr.length
-    ? itemsArr.map(item => `
+  // Create HTML with grouped items showing quantity
+  const itemsHtml = Object.keys(groups).length
+    ? Object.values(groups).map(group => `
         <div class="summary-item">
-          <span>${item.name}</span>
-          <span>$${Number(item.price).toFixed(2)}</span>
+          <span>${group.name} × ${group.qty}</span>
+          <span>$${(group.price * group.qty).toFixed(2)}</span>
         </div>
       `).join("")
-    : "<p>(Your cart is empty)</p>";
+    : "<p style='color:#999;font-size:0.875rem;'>(Your cart is empty)</p>";
 
   // Use .innerHTML to render the new HTML
   summaryItemsEl.innerHTML = itemsHtml;
 
   // Set total text
-  summaryTotalEl.textContent = "$" + calcTotal(itemsArr).toFixed(2);
+  summaryTotalEl.textContent = "$" + calcTotal(stored || []).toFixed(2);
 }
 
 // calculate total for an array of items [{name, price}, ...]
@@ -405,12 +401,21 @@ async function checkoutStripe() {
 
 /* ---------------- INIT ---------------- */
 
-document.addEventListener("DOMContentLoaded", () => {
-  // sync persisted array into the in-memory grouped cart, then render
-  syncInMemoryFromStorage();
+function initializeCart() {
+  // load from storage and render both cart views
   renderCart();
   renderCartItems();
   updateCartTotal();
+}
+
+// Initialize cart when the page loads
+document.addEventListener("DOMContentLoaded", initializeCart);
+
+// Re-render cart when storage changes (sync between pages)
+window.addEventListener("storage", (e) => {
+  if (e.key === "cart") {
+    initializeCart();
+  }
 });
 
 document.addEventListener('DOMContentLoaded', () => {
