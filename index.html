@@ -2,28 +2,26 @@
 <html lang="en" class="dark">
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width,initial-scale=1.0"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>ballard bread lab · late night pickup</title>
   <link rel="stylesheet" href="styles.css" />
   <script defer src="script.js"></script>
-
   <style>
-
-.summary-items-container {
-  border-top: 1px solid #555;
-  border-bottom: 1px solid #555;
-  padding: 12px 0;
-  margin: 12px 0;
-}
-.summary-item, .summary-total-line {
-  display: flex;
-  justify-content: space-between;
-  padding: 4px 0;
-}
-.summary-total-line {
-  font-size: 1.2rem;
-  margin-top: 8px;
-}
+    .summary-items-container {
+      border-top: 1px solid #555;
+      border-bottom: 1px solid #555;
+      padding: 12px 0;
+      margin: 12px 0;
+    }
+    .summary-item, .summary-total-line {
+      display: flex;
+      justify-content: space-between;
+      padding: 4px 0;
+    }
+    .summary-total-line {
+      font-size: 1.2rem;
+      margin-top: 8px;
+    }
     .modal {
       position: fixed;
       z-index: 1000;
@@ -34,385 +32,177 @@
       overflow: auto;
       background-color: rgba(0, 0, 0, 0.6);
       display: flex;
-      align-items: center;
       justify-content: center;
+      align-items: center;
     }
-    .modal.hidden {
+    .hidden {
       display: none;
     }
-    .modal-content {
-      background-color: #2c2c2c; /* Dark theme background */
-      color: #f0f0f0; /* Dark theme text */
-      margin: auto;
-      padding: 24px;
-      border: 1px solid #444;
+    .form-container {
+      background-color: #222;
+      padding: 30px;
       border-radius: 8px;
-      width: 90%;
-      max-width: 500px;
-      box-shadow: 0 5px 15px rgba(0,0,0,0.3);
+      margin: 20px;
+      color: #fff;
+      max-width: 600px;
     }
-    .modal-header {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      border-bottom: 1px solid #444;
-      padding-bottom: 12px;
-      margin-bottom: 16px;
+    .form-container h2 {
+      margin-top: 0;
     }
-    .modal-header h2 {
-      margin: 0;
-      font-size: 1.5rem;
+    .form-group {
+      margin-bottom: 15px;
     }
-    .modal-header button {
-      background: none;
-      border: none;
-      font-size: 1.8rem;
-      color: #aaa;
-      cursor: pointer;
-    }
-    .modal-body h3 {
-      margin-top: 16px;
-      margin-bottom: 8px;
-    }
-    .modal-body p {
-      margin: 4px 0;
-      color: #ccc;
-    }
-    .modal-body form {
-      margin-top: 24px;
-      display: flex;
-      flex-direction: column;
-      gap: 16px;
-    }
-    .modal-body label {
+    .form-group label {
+      display: block;
+      margin-bottom: 5px;
       font-weight: bold;
-      margin-bottom: -8px;
     }
-    .modal-body input {
+    .form-group input,
+    .form-group select {
+      width: 100%;
       padding: 10px;
-      border-radius: 4px;
       border: 1px solid #555;
+      border-radius: 4px;
       background-color: #333;
-      color: #f0f0f0;
+      color: #fff;
+      box-sizing: border-box;
     }
-    .modal-body button[type="submit"] {
-      margin-top: 1rem;
+    .form-group input:focus,
+    .form-group select:focus {
+      outline: none;
+      border-color: #999;
+    }
+    button {
+      background-color: #4CAF50;
+      color: white;
+      padding: 12px 20px;
+      border: none;
+      border-radius: 4px;
+      cursor: pointer;
+      font-size: 1rem;
+    }
+    button:hover {
+      background-color: #45a049;
+    }
+    button.secondary {
+      background-color: #666;
+      margin-left: 10px;
+    }
+    button.secondary:hover {
+      background-color: #555;
     }
   </style>
 </head>
-<body class="bg-body text-body">
-
-<header class="header">
-  <div class="wrap header-inner">
-    <div class="brand-block">
-      <div class="brand-row">
-        <div class="brand-name">ballard bread lab</div>
-        <div class="pill pill-green">late night pickup</div>
-      </div>
-      <div class="brand-sub">whole wheat • olive oil • egg • baked to order</div>
-    </div>
-
-    <div class="pickup-loc">
-      <div class="pickup-line">pickup: side door · unit 105</div>
-      <div class="pickup-line">5512 17th Ave NW, Seattle, WA 98107</div>
-      <div class="pickup-note">prepaid pickup · baked per order</div>
-    </div>
-  </div>
-</header>
-
-<main class="wrap main-grid">
-  <section class="main-col">
-
-    <section id="breads" class="block">
-      <div class="section-head">
-        <h2 class="section-title">tonight’s loaves baked per order</h2>
-        <p class="section-desc">
-          baked fresh and ready in your pickup window. choose pickup slot → pay → we bake.
-        </p>
-      </div>
-
-      <div class="card-grid">
-
-        <article class="card">
-          <div class="photo-placeholder">
-            <div>[photo: herb loaf]</div>
-            <div class="photo-hint">placeholder</div>
-          </div>
-          <div class="card-head-row">
-            <div class="card-title">Midnight Herb Loaf</div>
-            <div class="card-price">$8</div>
-          </div>
-          <div class="card-text">
-            Whole wheat + olive oil + egg. Garlic, onion, Italian herb blend.
-          </div>
-          <div class="card-organic">All organic ingredients.</div>
-          <div class="card-ingredients">
-            <div class="ingredients-label">Ingredients</div>
-            <div class="ingredients-list">
-              Whole-wheat flour, bread flour, warm water, olive oil, egg,
-              cane sugar, sea salt, onion powder, garlic powder,
-              Italian herbs (oregano, basil, thyme, rosemary), yeast.
-            </div>
-            <div class="allergen">Contains: Wheat, Egg.</div>
-          </div>
-          <button class="btn-primary full"
-            onclick="addToCart('Midnight Herb Loaf', 8)">
-            Add to Cart
-          </button>
-        </article>
-
-        <article class="card">
-          <div class="photo-placeholder">
-            <div>[photo: chocolate loaf]</div>
-            <div class="photo-hint">placeholder</div>
-          </div>
-          <div class="card-head-row">
-            <div class="card-title">Night Chocolate Loaf</div>
-            <div class="card-price">$9</div>
-          </div>
-          <div class="card-text">
-            Olive oil, egg, cocoa, vanilla, cinnamon. Soft, slightly sweet.
-          </div>
-          <div class="card-organic">All organic ingredients.</div>
-          <div class="card-ingredients">
-            <div class="ingredients-label">Ingredients</div>
-            <div class="ingredients-list">
-              Whole-wheat flour, bread flour, warm water, olive oil, egg,
-              cane sugar, cocoa powder, cinnamon, vanilla extract,
-              sea salt, yeast.
-            </div>
-            <div class="allergen">Contains: Wheat, Egg.</div>
-          </div>
-          <button class="btn-primary full"
-            onclick="addToCart('Night Chocolate Loaf', 9)">
-            Add to Cart
-          </button>
-        </article>
-
-        <article class="card">
-          <div class="photo-placeholder">
-            <div>[photo: biscocho]</div>
-            <div class="photo-hint">placeholder</div>
-          </div>
-          <div class="card-head-row">
-            <div class="card-title">Ballard Biscocho</div>
-            <div class="card-price">$10</div>
-          </div>
-          <div class="card-text">
-            crisp sweet bread bites, caramelized edges.
-          </div>
-          <div class="card-organic">All organic ingredients.</div>
-          <div class="card-ingredients">
-            <div class="ingredients-label">Ingredients</div>
-            <div class="ingredients-list">
-              Whole-wheat flour, bread flour, warm water, olive oil, egg,
-              cane sugar, cinnamon, vanilla extract, sea salt, yeast.
-            </div>
-            <div class="allergen">Contains: Wheat, Egg.</div>
-          </div>
-          <button class="btn-primary full"
-            onclick="addToCart('Ballard Biscocho', 10)">
-            Add to Cart
-          </button>
-        </article>
-      </div>
-    </section>
-
-    <section id="pickup" class="block">
-      <h2 class="section-title">choose pickup window</h2>
-      <p class="section-desc">
-        each loaf is started for your slot.
-      </p>
-
-      <div class="window-grid">
-        <label class="window-card">
-          <input
-            type="radio"
-            name="pickupWindow"
-            class="hidden-radio"
-            value="afternoon"
-            checked
-            onchange="setPickupWindow('afternoon')"
-          />
-          <div class="window-name">Afternoon Batch</div>
-          <div class="window-time">3 PM – 4 PM</div>
-          <div class="window-hint">orders in before 12 PM</div>
-        </label>
-
-        <label class="window-card">
-          <input
-            type="radio"
-            name="pickupWindow"
-            class="hidden-radio"
-            value="evening"
-            onchange="setPickupWindow('evening')"
-          />
-          <div class="window-name">Evening Batch</div>
-          <div class="window-time">6 PM – 7 PM</div>
-          <div class="window-hint">orders in before 3 PM</div>
-        </label>
-
-        <label class="window-card">
-          <input
-            type="radio"
-            name="pickupWindow"
-            class="hidden-radio"
-            value="night"
-            onchange="setPickupWindow('night')"
-          />
-          <div class="window-name">Night Batch</div>
-          <div class="window-time">9 PM – 10 PM</div>
-          <div class="window-hint">orders in before 6 PM</div>
-        </label>
-
-        <label class="window-card">
-          <input
-            type="radio"
-            name="pickupWindow"
-            class="hidden-radio"
-            value="midnight"
-            onchange="setPickupWindow('midnight')"
-          />
-          <div class="window-name">Midnight Batch</div>
-          <div class="window-time">12 AM – 1 AM</div>
-          <div class="window-hint">pickup ok</div>
-        </label>
-      </div>
-
-      <div class="info-block">
-        <div class="info-head">Delivery</div>
-        <div class="info-body">
-          local delivery option coming soon.
+<body>
+  <main>
+    <div id="checkout-section">
+      <h1>Order Summary</h1>
+      <div class="summary-items-container">
+        <div class="summary-item">
+          <span>Item 1</span>
+          <span>$10.00</span>
         </div>
-        <div class="toast-action">
-          <button class="btn-secondary full" disabled>
-            Delivery coming soon
-          </button>
+        <div class="summary-item">
+          <span>Item 2</span>
+          <span>$8.00</span>
         </div>
-        <div class="info-note">
-          pickup: side door · unit 105 · 5512 17th Ave NW
+        <div class="summary-total-line">
+          <span>Total</span>
+          <span>$18.00</span>
         </div>
       </div>
-    </section>
+      <button id="pay-schedule-btn">Pay & Schedule</button>
+    </div>
 
-    <section id="contact" class="block">
-      <form
-        action="https://formspree.io/f/xanlylkl"
-        method="POST"
-        class="contact-card"
-      >
-        <h2 class="section-title no-gap">questions?</h2>
-        <p class="section-desc tight">
-          ask about bread, pickup windows, or gift items.
-        </p>
-        <label class="form-field">
-          <span class="form-label">Your email</span>
-          <input class="input"
-            type="email"
-            name="email"
-            required
-            placeholder="you@example.com" />
-        </label>
-        <label class="form-field">
-          <span class="form-label">Message</span>
-          <textarea class="input textarea"
-            name="message"
-            rows="4"
-            required
-            placeholder="type your message here"></textarea>
-        </label>
-        <button class="btn-primary full" type="submit">Send</button>
-        <div class="form-foot">
-          handled securely by Formspree.
-        </div>
-      </form>
-    </section>
-  </section>
-
-  <aside class="cart-col">
-    <div class="cart-card">
-      <div class="cart-top">
-        <div class="cart-head">Your Order</div>
-        <div class="cart-total">
-          $<span id="cartTotal">0.00</span>
-        </div>
-      </div>
-
-      <div id="cartItems" class="cart-items empty-msg">
-        Cart is empty.
-      </div>
-
-      <a href="gift.html" class="btn-primary full alt-btn">
-        Add gift items
-      </a>
-
-      <button class="btn-checkout" onclick="openPayModal()">
-        Pay &amp; schedule pickup →
-      </button>
-
-      <p class="checkout-note">
-        choose pickup window, pay now, then swing by unit 105.
-      </p>
-
-      <div class="toast-blurb">
-        delivery coming soon.
+    <!-- Pickup Window Form (Hidden by default) -->
+    <div id="pickup-form" class="modal hidden">
+      <div class="form-container">
+        <h2>Select Pickup Window</h2>
+        <form>
+          <div class="form-group">
+            <label for="pickup-date">Pickup Date:</label>
+            <input type="date" id="pickup-date" name="pickup-date" required />
+          </div>
+          <div class="form-group">
+            <label for="pickup-time">Pickup Time:</label>
+            <select id="pickup-time" name="pickup-time" required>
+              <option value="">Select a time</option>
+              <option value="10:00 PM">10:00 PM</option>
+              <option value="10:30 PM">10:30 PM</option>
+              <option value="11:00 PM">11:00 PM</option>
+              <option value="11:30 PM">11:30 PM</option>
+            </select>
+          </div>
+          <button type="button" id="close-pickup">Continue</button>
+          <button type="button" class="secondary" id="cancel-pickup">Cancel</button>
+        </form>
       </div>
     </div>
-  </aside>
-</main>
 
-<footer class="footer">
-  <div class="wrap footer-inner">
-    <div class="foot-left">
-      <div class="foot-brand">ballard bread lab</div>
-      <div>side door pickup · unit 105</div>
-      <div>5512 17th Ave NW, Seattle, WA 98107</div>
-    </div>
-    <div class="foot-right">
-      <div>card checkout via Stripe</div>
-      <div>contact form active</div>
-    </div>
-  </div>
-</footer>
-
-<div id="payModal" class="modal hidden">
-  <div class="modal-content">
-    <div class="modal-header">
-      <h2>Complete Your Order</h2>
-      <button onclick="closePayModal()">×</button>
-    </div>
-
-    <div class="modal-body">
-      <h3>Pickup Window</h3>
-      <p id="summaryWindow"></p>
-
-      <h3>Order Summary</h3>
-      <div id="summaryItems" class="summary-items-container">
-        </div>
-      <div class="summary-total-line">
-        <strong>Total</strong>
-        <strong id="summaryTotal">$0.00</strong>
+    <!-- Delivery Form (Hidden by default) -->
+    <div id="delivery-form" class="modal hidden">
+      <div class="form-container">
+        <h2>Delivery Information</h2>
+        <form>
+          <div class="form-group">
+            <label for="delivery-name">Full Name:</label>
+            <input type="text" id="delivery-name" name="delivery-name" required />
+          </div>
+          <div class="form-group">
+            <label for="delivery-email">Email:</label>
+            <input type="email" id="delivery-email" name="delivery-email" required />
+          </div>
+          <div class="form-group">
+            <label for="delivery-address">Delivery Address:</label>
+            <input type="text" id="delivery-address" name="delivery-address" required />
+          </div>
+          <div class="form-group">
+            <label for="delivery-city">City:</label>
+            <input type="text" id="delivery-city" name="delivery-city" required />
+          </div>
+          <div class="form-group">
+            <label for="delivery-phone">Phone Number:</label>
+            <input type="tel" id="delivery-phone" name="delivery-phone" required />
+          </div>
+          <button type="submit">Complete Order</button>
+          <button type="button" class="secondary" id="cancel-delivery">Cancel</button>
+        </form>
       </div>
-
-      <form onsubmit="return false;">
-  <label for="buyerName">Name</label>
-  <input type="text" id="buyerName" placeholder="Your Name" required>
-
-  <label for="buyerPhone">Phone</label>
-  <input type="tel" id="buyerPhone" placeholder="For pickup notifications" required>
-
-  <label for="buyerEmail">Email</label>
-  <input type="email" id="buyerEmail" placeholder="For your receipt" required>
-
-  <button type="button" class="btn-primary full" onclick="checkoutStripe()">
-    Continue to Secure Payment
-  </button>
-</form>
     </div>
-  </div>
-</div>
-  </div>
-</div>
+  </main>
 
+  <script>
+    // Get button and form elements
+    const payScheduleBtn = document.getElementById('pay-schedule-btn');
+    const pickupForm = document.getElementById('pickup-form');
+    const deliveryForm = document.getElementById('delivery-form');
+    const closePickupBtn = document.getElementById('close-pickup');
+    const cancelPickupBtn = document.getElementById('cancel-pickup');
+    const cancelDeliveryBtn = document.getElementById('cancel-delivery');
+
+    // Show both forms when Pay & Schedule is clicked
+    payScheduleBtn.addEventListener('click', function() {
+      pickupForm.classList.remove('hidden');
+      deliveryForm.classList.remove('hidden');
+    });
+
+    // Close pickup form and proceed to delivery form
+    closePickupBtn.addEventListener('click', function() {
+      pickupForm.classList.add('hidden');
+      deliveryForm.classList.remove('hidden');
+    });
+
+    // Cancel pickup form
+    cancelPickupBtn.addEventListener('click', function() {
+      pickupForm.classList.add('hidden');
+      deliveryForm.classList.add('hidden');
+    });
+
+    // Cancel delivery form
+    cancelDeliveryBtn.addEventListener('click', function() {
+      pickupForm.classList.add('hidden');
+      deliveryForm.classList.add('hidden');
+    });
+  </script>
 </body>
 </html>
