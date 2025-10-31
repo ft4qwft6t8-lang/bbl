@@ -84,10 +84,9 @@
   overflow: hidden; /* ensure cropped image doesn't overflow */
 }
 .summary-items-container {
-  border-top: 1px solid var(--border-color);
   border-bottom: 1px solid var(--border-color);
-  padding: 12px 0;
-  margin: 12px 0;
+  padding: 0 0 12px 0;
+  margin: -4px 0 12px 0;
 }
 .summary-item {
   display: flex;
@@ -102,11 +101,18 @@
 .summary-total-line {
   display: flex;
   justify-content: space-between;
-  padding: 8px 0;
-  font-size: var(--fs-16);
-  font-weight: 600;
+  align-items: center;
+  padding: 0.25rem 0.5rem;
+  font-size: var(--fs-10);
+  font-weight: 500;
+  line-height: 1;
   margin-top: 8px;
-  color: var(--text-main);
+  color: var(--text-green);
+  background-color: var(--pill-green-bg);
+  border: 1px solid var(--pill-green-border);
+  border-radius: 0.5rem;
+  font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+  text-transform: lowercase;
 }
     .modal {
       position: fixed;
@@ -145,10 +151,18 @@
       margin-bottom: 16px;
     }
     .modal-header h2 {
+      display: inline-block;
       margin: 0;
-      font-size: var(--fs-18);
-      font-weight: 600;
-      color: var(--text-main);
+      padding: 0.25rem 0.5rem;
+      font-size: var(--fs-10);
+      font-weight: 500;
+      line-height: 1;
+      color: var(--text-green);
+      background-color: var(--pill-green-bg);
+      border: 1px solid var(--pill-green-border);
+      border-radius: 0.5rem;
+      font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+      text-transform: lowercase;
     }
     .modal-header button {
       background: none;
@@ -162,11 +176,19 @@
       color: var(--text-main);
     }
     .modal-body h3 {
+      display: inline-block;
       margin-top: 16px;
       margin-bottom: 8px;
-      font-size: var(--fs-14);
-      font-weight: 600;
-      color: var(--text-main);
+      padding: 0.25rem 0.5rem;
+      font-size: var(--fs-10);
+      font-weight: 500;
+      line-height: 1;
+      color: var(--text-green);
+      background-color: var(--pill-green-bg);
+      border: 1px solid var(--pill-green-border);
+      border-radius: 0.5rem;
+      font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+      text-transform: lowercase;
     }
     .modal-body p {
       margin: 4px 0;
@@ -430,6 +452,19 @@
           <div class="window-hint">pickup ok</div>
         </label>
       </div>
+    </section>
+      
+      <a href="gift.html" class="btn-primary full alt-btn">
+        Add gift items
+      </a>
+
+      <button class="btn-checkout" onclick="openPayModal()">
+        Pay &amp; schedule pickup →
+      </button>
+
+      <p class="checkout-note">
+        choose pickup window, pay now, then swing by unit 105.
+      </p>
 
       <div class="info-block">
         <div class="info-head">Delivery</div>
@@ -445,19 +480,6 @@
           pickup: side door · unit 105 · 5512 17th Ave NW
         </div>
       </div>
-    </section>
-      
-      <a href="gift.html" class="btn-primary full alt-btn">
-        Add gift items
-      </a>
-
-      <button class="btn-checkout" onclick="openPayModal()">
-        Pay &amp; schedule pickup →
-      </button>
-
-      <p class="checkout-note">
-        choose pickup window, pay now, then swing by unit 105.
-      </p>
 
     </div>
   </aside>
@@ -492,8 +514,7 @@
       <div id="summaryItems" class="summary-items-container">
         </div>
       <div class="summary-total-line">
-        <strong>Total</strong>
-        <strong id="summaryTotal">$0.00</strong>
+        total <span id="summaryTotal">$0.00</span>
       </div>
 
       <form onsubmit="return false;">
