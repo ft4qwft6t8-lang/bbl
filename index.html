@@ -230,67 +230,6 @@ main-grid {
       </div>
     </section>
 
-    <section id="pickup" class="block">
-      <h2 class="section-title">choose pickup window</h2>
-      <p class="section-desc">
-        each loaf is started for your slot.
-      </p>
-
-      <div class="window-grid">
-        <label class="window-card">
-          <input
-            type="radio"
-            name="pickupWindow"
-            class="hidden-radio"
-            value="afternoon"
-            checked
-            onchange="setPickupWindow('afternoon')"
-          />
-          <div class="window-name">Afternoon Batch</div>
-          <div class="window-time">3 PM – 4 PM</div>
-          <div class="window-hint">orders in before 12 PM</div>
-        </label>
-
-        <label class="window-card">
-          <input
-            type="radio"
-            name="pickupWindow"
-            class="hidden-radio"
-            value="evening"
-            onchange="setPickupWindow('evening')"
-          />
-          <div class="window-name">Evening Batch</div>
-          <div class="window-time">6 PM – 7 PM</div>
-          <div class="window-hint">orders in before 3 PM</div>
-        </label>
-
-        <label class="window-card">
-          <input
-            type="radio"
-            name="pickupWindow"
-            class="hidden-radio"
-            value="night"
-            onchange="setPickupWindow('night')"
-          />
-          <div class="window-name">Night Batch</div>
-          <div class="window-time">9 PM – 10 PM</div>
-          <div class="window-hint">orders in before 6 PM</div>
-        </label>
-
-        <label class="window-card">
-          <input
-            type="radio"
-            name="pickupWindow"
-            class="hidden-radio"
-            value="midnight"
-            onchange="setPickupWindow('midnight')"
-          />
-          <div class="window-name">Midnight Batch</div>
-          <div class="window-time">12 AM – 1 AM</div>
-          <div class="window-hint">pickup ok</div>
-        </label>
-      </div>
-
       <div class="info-block">
         <div class="info-head">Delivery</div>
         <div class="info-body">
@@ -483,6 +422,7 @@ main-grid {
       </div>
 
       <form onsubmit="return false;">
+        
   <label for="buyerName">Name</label>
   <input type="text" id="buyerName" placeholder="Your Name" required>
 
